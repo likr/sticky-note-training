@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   IonBackButton,
   IonButton,
@@ -28,6 +28,37 @@ const AddStickyNote = ({ history }) => {
   const [color, setColor] = useState(null)
   const [image, setImage] = useState(null)
 
+  const loadPicture = () => {
+    pictureRef.current
+      .getInputElement()
+      .then((e) => e.files[0])
+      .then((file) => {
+        const reader = new window.FileReader()
+        reader.onload = (event) => {
+          setImage(event.target.result)
+        }
+        reader.readAsDataURL(file)
+      })
+  }
+
+  useEffect(() => {
+    // XXX hack for funckin' safari
+    let prev = ''
+    const intervalId = setInterval(() => {
+      if (pictureRef.current && pictureRef.current.getInputElement) {
+        pictureRef.current.getInputElement().then(({ value }) => {
+          if (value && value !== prev) {
+            loadPicture()
+          }
+          prev = value
+        })
+      }
+    }, 100)
+    return () => {
+      clearInterval(intervalId)
+    }
+  }, [])
+
   return (
     <IonPage>
       <IonHeader>
@@ -43,7 +74,9 @@ const AddStickyNote = ({ history }) => {
           onSubmit={(event) => {
             event.preventDefault()
             const note = noteRef.current.value
-            const tags = Array.from(new Set(tagRef.current.value.split()))
+            const tags = Array.from(
+              new Set(tagRef.current.value.split())
+            ).filter((v) => !!v)
             if (image && color) {
               addStickyNote({
                 image,
@@ -59,23 +92,7 @@ const AddStickyNote = ({ history }) => {
           <IonList>
             <IonItem>
               <IonLabel position='stacked'>Picture</IonLabel>
-              <IonInput
-                ref={pictureRef}
-                type='file'
-                required
-                onIonChange={(event) => {
-                  event.target
-                    .getInputElement()
-                    .then((e) => e.files[0])
-                    .then((file) => {
-                      const reader = new window.FileReader()
-                      reader.onload = (event) => {
-                        setImage(event.target.result)
-                      }
-                      reader.readAsDataURL(file)
-                    })
-                }}
-              />
+              <IonInput ref={pictureRef} type='file' required />
             </IonItem>
             {image && (
               <IonCard color={colors[color] || ''}>
@@ -83,16 +100,32 @@ const AddStickyNote = ({ history }) => {
               </IonCard>
             )}
             <IonItem>
-              <IonLabel position='stacked'>Color</IonLabel>
+              <IonLabel position='stacked'>Judge</IonLabel>
               <IonSelect
                 required
+                interface='popover'
                 onIonChange={(event) => {
                   setColor(event.target.value)
                 }}
               >
-                <IonSelectOption value='green'>Green</IonSelectOption>
-                <IonSelectOption value='yellow'>Yellow</IonSelectOption>
-                <IonSelectOption value='red'>Red</IonSelectOption>
+                <IonSelectOption value='green'>
+                  God
+                  <span role='img' aria-label='+1'>
+                    👍
+                  </span>
+                </IonSelectOption>
+                <IonSelectOption value='yellow'>
+                  Neutral
+                  <span role='img' aria-label='thinking-face'>
+                    🤔
+                  </span>
+                </IonSelectOption>
+                <IonSelectOption value='red'>
+                  Bad
+                  <span role='img' aria-label='-1'>
+                    👎
+                  </span>
+                </IonSelectOption>
               </IonSelect>
             </IonItem>
             <IonItem>
