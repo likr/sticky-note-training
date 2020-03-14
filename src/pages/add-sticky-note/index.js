@@ -6,7 +6,6 @@ import {
   IonCard,
   IonContent,
   IonHeader,
-  IonImg,
   IonInput,
   IonItem,
   IonLabel,
@@ -103,7 +102,7 @@ const AddStickyNote = ({ history }) => {
             </IonItem>
             {image && (
               <IonCard color={colors[color] || ''}>
-                <IonImg className='ion-padding' src={image} />
+                <img className='ion-padding' src={image} alt='TODO' />
               </IonCard>
             )}
             <IonItem>

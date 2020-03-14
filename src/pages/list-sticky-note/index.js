@@ -8,7 +8,6 @@ import {
   IonFabButton,
   IonHeader,
   IonIcon,
-  IonImg,
   IonItem,
   IonItemOptions,
   IonItemOption,
@@ -58,7 +57,7 @@ const ListPage = ({ history }) => {
                 <IonItemSliding key={id}>
                   <IonItem>
                     <IonCard color={colors[color]}>
-                      <IonImg className='ion-padding' src={image} />
+                      <img className='ion-padding' src={image} alt='TODO' />
                       {note && <IonCardContent>{note}</IonCardContent>}
                       {tags.length > 0 && (
                         <IonCardContent>
