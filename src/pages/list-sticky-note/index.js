@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   IonCard,
   IonCardContent,
@@ -17,7 +17,8 @@ import {
   IonSearchbar,
   IonTitle,
   IonToolbar,
-  IonPage
+  IonPage,
+  useIonViewWillEnter
 } from '@ionic/react'
 import { add } from 'ionicons/icons'
 import { colors } from '../../colors'
@@ -27,7 +28,7 @@ const ListPage = ({ history }) => {
   const [stickyNotes, setStickyNotes] = useState([])
   const [search, setSearch] = useState('')
 
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     listStickyNotes().then((items) => {
       setStickyNotes(items)
     })
@@ -48,23 +49,28 @@ const ListPage = ({ history }) => {
         />
         <IonList>
           {stickyNotes
-            .filter(({ tags }) => tags.some((tag) => tag.includes(search)))
+            .filter(
+              ({ tags }) =>
+                tags.length === 0 || tags.some((tag) => tag.includes(search))
+            )
             .map(({ id, color, image, note, tags }) => {
               return (
                 <IonItemSliding key={id}>
                   <IonItem>
                     <IonCard color={colors[color]}>
                       <IonImg className='ion-padding' src={image} />
-                      <IonCardContent>{note}</IonCardContent>
-                      <IonCardContent>
-                        {tags.map((tag) => {
-                          return (
-                            <IonChip key={tag} outline>
-                              {tag}
-                            </IonChip>
-                          )
-                        })}
-                      </IonCardContent>
+                      {note && <IonCardContent>{note}</IonCardContent>}
+                      {tags.length > 0 && (
+                        <IonCardContent>
+                          {tags.map((tag) => {
+                            return (
+                              <IonChip key={tag} outline>
+                                {tag}
+                              </IonChip>
+                            )
+                          })}
+                        </IonCardContent>
+                      )}
                     </IonCard>
                   </IonItem>
                   <IonItemOptions side='start'>

@@ -23,6 +23,7 @@ import { addStickyNote } from '../../db'
 
 const AddStickyNote = ({ history }) => {
   const pictureRef = useRef()
+  const colorRef = useRef()
   const noteRef = useRef()
   const tagRef = useRef()
   const [color, setColor] = useState(null)
@@ -84,7 +85,13 @@ const AddStickyNote = ({ history }) => {
                 note,
                 tags
               }).then(() => {
-                history.push('/')
+                pictureRef.current.value = ''
+                colorRef.current.value = ''
+                noteRef.current.value = ''
+                tagRef.current.value = ''
+                setImage(null)
+                setColor(null)
+                history.push('/', 'root')
               })
             }
           }}
@@ -102,6 +109,7 @@ const AddStickyNote = ({ history }) => {
             <IonItem>
               <IonLabel position='stacked'>Judge</IonLabel>
               <IonSelect
+                ref={colorRef}
                 required
                 interface='popover'
                 onIonChange={(event) => {
