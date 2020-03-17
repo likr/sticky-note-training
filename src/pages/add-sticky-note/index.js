@@ -119,7 +119,7 @@ const AddStickyNote = ({ history }) => {
                 }}
               >
                 <IonSelectOption value='green'>
-                  God
+                  Good
                   <span role='img' aria-label='+1'>
                     👍
                   </span>
