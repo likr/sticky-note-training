@@ -1,9 +1,9 @@
 {
-  "name": "Sticky Note Training",
+  "name": "ふせんトレーナー",
   "short_name": "sticky-note-training",
   "theme_color": "#2dd36f",
   "background_color": "#ffffff",
-  "display": "minimal-ui",
+  "display": "standalone",
   "Scope": "/",
   "start_url": "/",
   "icons": [

@@ -29,6 +29,9 @@
   "dependencies": {
     "@ionic/react": "^5.0.5",
     "@ionic/react-router": "^5.0.5",
+    "@nivo/calendar": "^0.61.1",
+    "@nivo/pie": "^0.61.1",
+    "@nivo/stream": "^0.61.1",
     "@reduxjs/toolkit": "^1.2.5",
     "babel-eslint": "^10.0.3",
     "ionicons": "^5.0.1",
