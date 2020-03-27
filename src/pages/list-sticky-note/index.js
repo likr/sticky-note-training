@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {
+  IonButtons,
   IonCard,
   IonCardContent,
   IonChip,
@@ -13,6 +14,7 @@ import {
   IonItemOption,
   IonItemSliding,
   IonList,
+  IonMenuButton,
   IonSearchbar,
   IonTitle,
   IonToolbar,
@@ -37,6 +39,9 @@ const ListPage = ({ history }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot='start'>
+            <IonMenuButton />
+          </IonButtons>
           <IonTitle>Sticky Notes</IonTitle>
         </IonToolbar>
       </IonHeader>

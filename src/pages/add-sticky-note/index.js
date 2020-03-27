@@ -84,10 +84,13 @@ const AddStickyNote = ({ history }) => {
                 note,
                 tags
               }).then(() => {
-                pictureRef.current.value = ''
+                // pictureRef.current.value = ''
                 colorRef.current.value = ''
                 noteRef.current.value = ''
                 tagRef.current.value = ''
+                pictureRef.current.getInputElement().then((e) => {
+                  e.value = ''
+                })
                 setImage(null)
                 setColor(null)
                 history.push('/', 'root')
@@ -116,7 +119,7 @@ const AddStickyNote = ({ history }) => {
                 }}
               >
                 <IonSelectOption value='green'>
-                  God
+                  Good
                   <span role='img' aria-label='+1'>
                     👍
                   </span>
